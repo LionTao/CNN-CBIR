@@ -110,11 +110,11 @@ def initCNNCache(dataset_path="dataset", dbname="index.sqlite"):
         # names.append(img_name)
         names.append(img_path)
         cursor.execute(sql,(img_path, norm_feat.tobytes()))
-        print("\rextracting feature from image No. %d , %d images in total" % ((i + 1), len(img_list)), end='')
+        print("\rextracting feature from image No. {} , {} images in total".format((i + 1), len(img_list)), end='')
     conn.commit()
     conn.close()
     feats = np.array(feats)
-    print(feats)
+    # print(feats)
     # directory for storing extracted features
     output = "index.h5"
 

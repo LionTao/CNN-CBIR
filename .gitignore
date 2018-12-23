@@ -55,3 +55,8 @@ fabric.properties
 # Editor-based Rest Client
 .idea/httpRequests
 
+.idea/CNN-CBIR.iml
+.idea/encodings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
