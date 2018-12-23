@@ -13,12 +13,8 @@ def get_imlist(path, res: list) -> None:
             if os.path.basename(filepath).endswith('.jpg') or \
                     os.path.basename(filepath).endswith('.jpeg'):
                 res.append(filepath)
-            else:
-                continue
         elif os.path.isdir(filepath):
             get_imlist(filepath, res)
-        else:
-            pass
 
 
 def search(imagepath: str, k: int, dbname="index.sqlite") -> list:
