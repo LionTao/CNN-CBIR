@@ -1,5 +1,12 @@
-def get_imlist(path, res: list):
+def get_imlist(path, res: list) -> None:
+    """
+    search for jpeg recursively in the given folder
+    :param path: path to images
+    :param res: res list for recursive search
+    :return: None
+    """
     import os
+
     for e in os.listdir(path):
         filepath = os.path.join(path, e)
         if os.path.isfile(filepath):
@@ -14,7 +21,7 @@ def get_imlist(path, res: list):
             pass
 
 
-def search(imagepath:str, k:int,dbname="index.sqlite") -> list:
+def search(imagepath: str, k: int, dbname="index.sqlite") -> list:
     """
     API for CNN search
     :param imagepath: The image for search
@@ -74,7 +81,13 @@ def search(imagepath:str, k:int,dbname="index.sqlite") -> list:
     return res
 
 
-def initCNNCache(dataset_path="dataset", dbname="index.sqlite"):
+def initCNNCache(dataset_path="dataset", dbname="index.sqlite") -> None:
+    """
+    make cache for image features
+    :param dataset_path: path to image dataset
+    :param dbname: name of sqliteDB(TODO)
+    :return: None
+    """
     from CreateMobileNet import initMobileNet, extract_feat
     import numpy as np
     import h5py
@@ -109,7 +122,7 @@ def initCNNCache(dataset_path="dataset", dbname="index.sqlite"):
         feats.append(norm_feat)
         # names.append(img_name)
         names.append(img_path)
-        cursor.execute(sql,(img_path, norm_feat.tobytes()))
+        cursor.execute(sql, (img_path, norm_feat.tobytes()))
         print("\rextracting feature from image No. {} , {} images in total".format((i + 1), len(img_list)), end='')
     conn.commit()
     conn.close()
