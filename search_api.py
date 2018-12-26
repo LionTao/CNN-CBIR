@@ -17,14 +17,13 @@ def get_imlist(path, res: list) -> None:
             get_imlist(filepath, res)
 
 
-def search(imagepath: str, k: int, dbname="index.sqlite") -> list:
+def search(imagepath: str, k: int, dbpath=".") -> list:
     """
     API for CNN search
     :param imagepath: The image for search
     :param k: num of images to return
     :return:list of paths of images
     """
-
 
     import numpy as np
     import h5py  # db
@@ -36,12 +35,14 @@ def search(imagepath: str, k: int, dbname="index.sqlite") -> list:
     from modules.CNNCBIR.CreateMobileNet import extract_feat
     from modules.CNNCBIR.CreateMobileNet import initMobileNet
 
+    dbname = dbpath + "/index.sqlite"
     if not os.path.exists(dbname):
         raise Exception("Data Cache not initialized")
     conn = sqlite3.connect(dbname)
     cursor = conn.cursor()
 
-    db = h5py.File("index.h5", 'r')
+    h5name = dbpath + "/index.h5"
+    db = h5py.File(h5name, 'r')
     feats = db['dataset_1'][:]
     imgNames = db['dataset_2'][:]
     db.close()
@@ -78,7 +79,7 @@ def search(imagepath: str, k: int, dbname="index.sqlite") -> list:
     return res
 
 
-def initCNNCache(dataset_path="dataset", dbname="index.sqlite") -> None:
+def initCNNCache(dataset_path="dataset", dbpath=".") -> None:
     """
     make cache for image features
     :param dataset_path: path to image dataset
@@ -91,7 +92,7 @@ def initCNNCache(dataset_path="dataset", dbname="index.sqlite") -> None:
     import os
     import sqlite3
     from modules.CNNCBIR.CreateMobileNet import initMobileNet, extract_feat
-
+    dbname = dbpath + "/index.sqlite"
     if os.path.exists(dbname):
         os.remove(dbname)
     conn = sqlite3.connect(dbname)
@@ -128,7 +129,7 @@ def initCNNCache(dataset_path="dataset", dbname="index.sqlite") -> None:
     feats = np.array(feats)
     # print(feats)
     # directory for storing extracted features
-    output = "index.h5"
+    output = dbpath + "index.h5"
 
     print("\nDumping cache result to ", output)
 
