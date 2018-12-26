@@ -24,7 +24,7 @@ def search(imagepath: str, k: int, dbname="index.sqlite") -> list:
     :param k: num of images to return
     :return:list of paths of images
     """
-    from CreateMobileNet import initMobileNet
+
 
     import numpy as np
     import h5py  # db
@@ -33,7 +33,8 @@ def search(imagepath: str, k: int, dbname="index.sqlite") -> list:
 
     # import matplotlib.pyplot as plt
     # import matplotlib.image as mpimg
-    from CreateMobileNet import extract_feat
+    from modules.CNNCBIR.CreateMobileNet import extract_feat
+    from modules.CNNCBIR.CreateMobileNet import initMobileNet
 
     if not os.path.exists(dbname):
         raise Exception("Data Cache not initialized")
@@ -84,11 +85,13 @@ def initCNNCache(dataset_path="dataset", dbname="index.sqlite") -> None:
     :param dbname: name of sqliteDB(TODO)
     :return: None
     """
-    from CreateMobileNet import initMobileNet, extract_feat
+
     import numpy as np
     import h5py
     import os
     import sqlite3
+    from modules.CNNCBIR.CreateMobileNet import initMobileNet, extract_feat
+
     if os.path.exists(dbname):
         os.remove(dbname)
     conn = sqlite3.connect(dbname)
